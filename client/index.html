@@ -3,17 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <script src="https://cdn.socket.io/socket.io-1.4.5.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script>
-        var socket = io();
-
-        socket.emit('happy');
-
-        socket.on('happy', function(data) {
-
-        });
-    </script>
     <style>
         html {
             height:100%;
@@ -36,12 +26,12 @@
                         <div class="card-text">
                             Play the game either by joining a game or hosting one.
                         </div>
-                        <form action="/play">
+                        <form action="/play" method="GET">
                             <div class="input-group my-3">
                                 <div class="input-group-prepend">
                                         <span class="input-group-text">Game Code</span>
                                 </div>
-                                <input type="text" class="form-control" placeholder="Ex: 567565" aria-label="Username">
+                                <input type="text" class="form-control" name="gameID" placeholder="Ex: 567565" id="example-search-input">
                                 <div class="input-group-append">
                                         <button type="submit" class="btn btn-primary btn">Join</button>
                                 </div>
@@ -53,7 +43,7 @@
                         </form>
                     </div>
                     <div class="card-footer text-muted text-center">
-                            2018 &copy; Dylan Dunn
+                            &copy; 2018 Dylan Dunn
                     </div>
                 </div>
             </div>

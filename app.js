@@ -22,10 +22,10 @@ app.use('client', express.static(__dirname + '/client'));
 
 //Socket connection handler, print to console on connection
 io.sockets.on('connection', function(socket) {
-    console.log('socket connection');
-
-    socket.on('happy', function() {
-        console.log('happy');
+    socket.on('joinGame', function(data) {
+        console.log('A User Joined Game:', data);
+        socket.join(data);
+        socket.emit('joinAccepted')
     });
 });
 
