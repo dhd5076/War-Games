@@ -10,6 +10,8 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.16.3",
+    "random-hash": "^4.0.1",
+    "randomstring": "^1.1.5",
     "socketio": "^1.0.0"
   }
 }
