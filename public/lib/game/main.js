@@ -2,6 +2,7 @@ var bg;
 var socket;
 var myID;
 var gameInstance;
+var entitySelected;
 
 ig.module( 
 	'game.main' 
@@ -16,7 +17,7 @@ ig.module(
 MyGame = ig.Game.extend({
 	
 	font: new ig.Font( 'media/04b03.font.png' ),
-	
+	clearColor: null,
 	
 	init: function() {
 		ig.input.initMouse();
@@ -31,7 +32,7 @@ MyGame = ig.Game.extend({
 			[1,1,1,1,1,1,1,1,1,1]
 		];
 		bg = new ig.BackgroundMap( 64, data, 'media/grass.png' );
-		bg.zIndex = -1;
+		bg.foreground = false;
 		
 		socket = io();
 		Requests = { QueryString : function(item){
@@ -81,6 +82,11 @@ MyGame = ig.Game.extend({
 		},
 	
 	update: function() {
+		for( var i = 0; i < this.entities.length; i++ ) {
+			if(Math.abs(this.entities[i].pos.x - ig.input.mouse.x) < 16 && Math.abs(this.entities[i].pos.y - ig.input.mouse.y < 16) && this.entities[i].OWNER == myID) {
+				entitySelected = i;
+			}
+		}
 		this.parent();
 	},
 	
@@ -89,12 +95,17 @@ MyGame = ig.Game.extend({
 			y = ig.system.height/2;
 		bg.draw(0,0);
 		for( var i = 0; i < this.entities.length; i++ ) {
-			this.entities[i].draw();
 			this.font.draw( 'OWNER:' + this.entities[i].OWNER, this.entities[i].pos.x, this.entities[i].pos.y, ig.Font.ALIGN.CENTER );
+			if(this.entities[i].selected) {
+				ig.system.context.strokeStyle="#FF0000";
+				ig.system.context.lineWidth=5;
+				ig.system.context.strokeRect(this.entities[i].pos.x * 2, this.entities[i].pos.y * 2,32,32);
+			}
 		}
 		this.font.draw("OUR ID: " + myID,100, 10, ig.Font.ALIGN.CENTER);
-		this.font.draw("MOUSE X: " + ig.input.mouse.x,100, 20, ig.Font.ALIGN.CENTER);
-		this.font.draw("MOUSE Y: " + ig.input.mouse.y,100, 20, ig.Font.ALIGN.CENTER);
+		this.font.draw("MOUSE X: " + ig.input.mouse.x,100, 30, ig.Font.ALIGN.CENTER);
+		this.font.draw("MOUSE Y: " + ig.input.mouse.y,100, 40, ig.Font.ALIGN.CENTER);
+		this.parent();
 	}
 });
 
